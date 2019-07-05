@@ -13,49 +13,61 @@ const Container = styled.div`
 `;
 
 class Characters extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: [],
-      loading: true
-    };
-  }
-  async componentDidMount() {
-    const url = "https://rickandmortyapi.com/api/character/";
+  state = {
+    items: [],
+    nextURL: null,
+    prevURL: null,
+    loading: true
+  };
+
+  // async fetchData(url = "https://rickandmortyapi.com/api/character/") {} - nije bind-ovano na Characters
+  fetchData = async (url = "https://rickandmortyapi.com/api/character/") => {
     const response = await fetch(url);
     const data = await response.json();
     // console.log(data);
-    this.setState({
-      items: data.results,
-      loading: false,
-      id: data.results.id
-    });
-  }
+    this.setState(
+      {
+        items: data.results,
+        loading: false,
+        id: data.results.id,
+        nextURL: data.info.next,
+        prevURL: data.info.prev
+      },
+      () => console.log(this.state)
+    );
+  };
+
+  componentDidMount = () => this.fetchData();
 
   render() {
-    let { items, loading } = this.state;
+    let { items, loading, nextURL, prevURL } = this.state;
     console.log(this.props);
-    // console.log(items);
+    console.log(items);
+
     // console.log(this.props.match.params);
     return (
       <div className="App">
+        <h1>Characters</h1>
         {loading ? (
           <div>Loading...</div>
         ) : (
           <Container>
+            <button onClick={() => prevURL && this.fetchData(prevURL)}>
+              Previous page
+            </button>
+            <button onClick={() => nextURL && this.fetchData(nextURL)}>
+              Next page
+            </button>
             {items.map(item => (
               <div key={item.id}>
-                <Router>
-                  <Link to={`${item.id}`}>
-                    <img src={item.image} alt="img" />
-                    <p>{item.name}</p>
-                  </Link>
-                </Router>
+                <Link to={`/${item.id}`}>
+                  <img src={item.image} alt="img" />
+                  <p>{item.name}</p>
+                </Link>
               </div>
             ))}
           </Container>
         )}
-        {/* <Info /> */}
       </div>
     );
   }
