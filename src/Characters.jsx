@@ -26,6 +26,8 @@ const Buttons = styled.div`
     padding: 10px;
     border-radius: 10px;
     color: #fff;
+    cursor: pointer;
+    outline: none;
   }
 `;
 
@@ -48,11 +50,9 @@ class Characters extends Component {
     loading: true
   };
 
-  // async fetchData(url = "https://rickandmortyapi.com/api/character/") {} - nije bind-ovano na Characters
   fetchData = async (url = "https://rickandmortyapi.com/api/character/") => {
     const response = await fetch(url);
     const data = await response.json();
-    // console.log(data);
     this.setState(
       {
         items: data.results,
