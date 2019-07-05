@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: grid;
@@ -10,6 +10,34 @@ const Container = styled.div`
   grid-row-gap: 10px;
   justify-items: center;
   padding: 30px 0;
+  a {
+    text-decoration: none;
+    color: #000;
+  }
+`;
+
+const Buttons = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 60px 55px;
+  button {
+    border: none;
+    background-color: #0c570e;
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+  }
+`;
+
+const Image = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
 `;
 
 class Characters extends Component {
@@ -44,20 +72,19 @@ class Characters extends Component {
     console.log(this.props);
     console.log(items);
 
-    // console.log(this.props.match.params);
     return (
-      <div className="App">
-        <h1>Characters</h1>
+      <div>
+        <Image>
+          <img
+            src="https://fontmeme.com/permalink/190705/292a19e694097908d56c1cd18ca128ed.png"
+            alt="get-schwifty-font"
+            border="0"
+          />
+        </Image>
         {loading ? (
           <div>Loading...</div>
         ) : (
           <Container>
-            <button onClick={() => prevURL && this.fetchData(prevURL)}>
-              Previous page
-            </button>
-            <button onClick={() => nextURL && this.fetchData(nextURL)}>
-              Next page
-            </button>
             {items.map(item => (
               <div key={item.id}>
                 <Link to={`/${item.id}`}>
@@ -68,6 +95,14 @@ class Characters extends Component {
             ))}
           </Container>
         )}
+        <Buttons>
+          <button onClick={() => prevURL && this.fetchData(prevURL)}>
+            Previous page
+          </button>
+          <button onClick={() => nextURL && this.fetchData(nextURL)}>
+            Next page
+          </button>
+        </Buttons>
       </div>
     );
   }

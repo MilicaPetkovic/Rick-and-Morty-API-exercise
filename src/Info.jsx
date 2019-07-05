@@ -1,4 +1,13 @@
 import React, { Component } from "react";
+import styled from "styled-components";
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-top: 20px;
+`;
 
 class Info extends Component {
   constructor(props) {
@@ -11,6 +20,10 @@ class Info extends Component {
         id: null,
         image: "",
         location: {
+          name: "",
+          url: ""
+        },
+        origin: {
           name: "",
           url: ""
         },
@@ -45,6 +58,10 @@ class Info extends Component {
             name: data.location.name,
             url: data.location.url
           },
+          origin: {
+            name: data.origin.name,
+            url: data.origin.url
+          },
           species: data.species,
           status: data.status,
           type: data.type,
@@ -61,22 +78,26 @@ class Info extends Component {
     let { info, loading, error } = this.state;
 
     return (
-      <div>
-        {error && <h1>Sum Ting Went Wong</h1>}
+      <Container>
+        {error && <h1>Something Went Wong</h1>}
         {loading && !error ? (
           <h1>Loading</h1>
         ) : (
           <div>
             <img src={info.image} alt={info.name} />
+            <p>{info.name}</p>
             <p>{info.status}</p>
             <p>{info.species}</p>
             <p>{info.type}</p>
             <p>{info.gender}</p>
-            <p>{info.name}</p>
+            <p>{info.origin.name}</p>
+            <p>{info.origin.url}</p>
+            <p>{info.location.name}</p>
+            <p>{info.location.url}</p>
             <p>{info.created}</p>
           </div>
         )}
-      </div>
+      </Container>
     );
   }
 }

@@ -4,7 +4,6 @@ import { Route } from "react-router-dom";
 import Info from "./Info";
 import ErrorBoundary from "./ErrorBoundary";
 
-// ROUTING GOES HERE
 class App extends Component {
   render() {
     return (
